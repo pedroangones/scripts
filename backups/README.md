@@ -18,10 +18,14 @@ bash backup_now.sh
 
 O script:
 
-- para temporariamente os containers `gitea` e `portainer` para consistencia;
+- para temporariamente os servicos por stack via `docker compose stop` em:
+  - `/Users/pedroangones/srv/docker/stacks/gitea`
+  - `/Users/pedroangones/srv/docker/stacks/portainer`
 - gera arquivos `tar.gz` datados por dia;
-- reinicia os containers ao final;
-- grava log em `/Users/pedroangones/srv/backups/backup.log`.
+- sobe novamente os servicos por stack via `docker compose up -d`;
+- se um `compose stop/up` falhar, registra `WARN` e continua o processo;
+- grava log em `/Users/pedroangones/srv/backups/backup.log`;
+- registra snapshot de `docker ps --format "table {{.Names}}\t{{.Status}}"` (linhas de `gitea` e `portainer`) antes de parar e depois de subir.
 
 ## Onde ficam os arquivos
 
